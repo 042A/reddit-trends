@@ -9,5 +9,6 @@ Run pip maybe...
 TBA
 
 ## Developer diary
-01.10.19 - Hello World.
-01.10.19 - Write a python dict as json to file.
+* 01.10.19 - Hello World.
+* 01.10.19 - Write a python dict as json to file.
+* 01.10.19 - Read a json file and use of inbuilt input function.
