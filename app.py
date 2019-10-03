@@ -1,5 +1,31 @@
 import json
 import praw
+import nltk
+from nltk.corpus import stopwords     
+
+# Mixed util function that needs some love
+def nltk_test ():
+    f = open('file.json', 'r')
+    my_dict = json.load(f)
+    print (my_dict)
+
+    tokens = []
+    variables = []
+    items = my_dict.get('submission')
+    for item in items:
+        #print (item)
+        variables.append(item.get('title'))
+        tokens.append(item.get('title').split())
+    print (tokens)
+ 
+    flattened = [val for sublist in tokens for val in sublist]
+
+    freq = nltk.FreqDist(flattened)
+   
+    for key,val in freq.items():
+        print (str(key) + ':' + str(val))
+    # Mathlib function for a fun visualisation
+    freq.plot(20, cumulative=False)
 
 # Create Reddit Object with credentials from external file. See rename keystemplate to keys.json and fill in reddit api credentials.
 def create_reddit_object ():
@@ -14,10 +40,19 @@ def create_reddit_object ():
 
 # Parse Reddit submissions, these will be used as test data for N
 def summon_submission ():
-    for submission in create_reddit_object.reddit.subreddit('all').hot(limit=25):
+    #Check it out
+    """ for submission in create_reddit_object.reddit.subreddit('politics').hot(limit=25):
         print(submission.title)
         print(submission.id)
-    
+    """
+    #Write to that file
+    f = open("file.json", "w")
+    submission = [{
+        "title": submission.title,
+        "id": submission.id, 
+    }
+    for submission in create_reddit_object.reddit.subreddit('all').hot(limit=50)]
+    f.write (json.dumps({"submission": submission}, indent=3))
 
 
 # Function to write a dict as json to file.json
@@ -54,5 +89,8 @@ def input ():
     else :
         print("Please choose read(r) or write(w). Exiting.")
 
-create_reddit_object()
-summon_submission()
+
+# Comment out the first two to just do the frequency analysis
+#create_reddit_object()
+#summon_submission()
+nltk_test()
