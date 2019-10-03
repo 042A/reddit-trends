@@ -6,7 +6,7 @@ Reddit trends and NLP sentiment scoring
 ## Installation
 Install python 3...
 Run pip maybe...
-TBA
+matplotlib, praw, nltkTBA
 
 ## Developer diary
 * 01.10.19 - Hello World.
