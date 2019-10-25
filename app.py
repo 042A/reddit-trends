@@ -1,7 +1,11 @@
 import json
 import praw
 import nltk
-from nltk.corpus import stopwords     
+from nltk.corpus import stopwords
+import numpy as np
+import pandas as pd
+
+stop_words=set(stopwords.words("english"))
 
 # Mixed util function that needs some love
 def nltk_test ():
@@ -16,16 +20,34 @@ def nltk_test ():
         #print (item)
         variables.append(item.get('title'))
         tokens.append(item.get('title').split())
-    print (tokens)
- 
+    #print (tokens)
+    
+    #Flatten into list
     flattened = [val for sublist in tokens for val in sublist]
+    #print (flattened)
 
-    freq = nltk.FreqDist(flattened)
-   
-    for key,val in freq.items():
-        print (str(key) + ':' + str(val))
+    # Removing stopwords
+    fsent = []
+    for w in flattened:
+        if w not in stop_words:
+            fsent.append(w)
+    print (fsent)
+
+    # Adding POS
+    pos_tokens = nltk.pos_tag(fsent)
+    print (pos_tokens)
+
+    #Pandas dataframe presentation
+    df1 = pd.DataFrame(pos_tokens)    
+    #print (df1)
+    with pd.option_context('display.max_rows', None, 'display.max_columns', None):  # more options can be specified also
+        print(df1)
+    # MATPLOTLIB VISUALISATION
+    #freq = nltk.FreqDist(flattened)
+    #for key,val in freq.items():
+    #    print (str(key) + ':' + str(val))
     # Mathlib function for a fun visualisation
-    freq.plot(20, cumulative=False)
+    #freq.plot(20, cumulative=False)
 
 # Create Reddit Object with credentials from external file. See rename keystemplate to keys.json and fill in reddit api credentials.
 def create_reddit_object ():
