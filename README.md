@@ -14,3 +14,4 @@ matplotlib, praw, nltkTBA
 * 01.10.19 - Read a json file and use of inbuilt input function.
 * 02.10.19 - Added the PRAW Wrapper for Reddit API. More info: https://praw.readthedocs.io
 * 03.10.19 - Word frequency analysis added. Poopy code..
+* 25.10.19 - Added Stopwords, POS-tagging and a pandas dataframe
